@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shiller CAPE dashboard</title>
+<style>
+:root { --red:#E3120B; --bg:#F2F2EF; --fg:#121212; --muted:#4D4D4D; }
+body { margin:0; background:var(--bg); color:var(--fg); font-family:Arial,"Helvetica Neue",Helvetica,"Liberation Sans",sans-serif; border-top:8px solid var(--red); }
+main { max-width:1000px; margin:0 auto; padding:24px 16px 48px; }
+h1 { font-size:1.6rem; margin:0 0 4px; }
+.sub { color:var(--muted); margin:0 0 20px; font-size:.95rem; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:20px; }
+.kpi { border-top:3px solid var(--red); padding-top:6px; }
+.kl { font-size:.8rem; color:var(--muted); } .kv { font-size:1.7rem; font-weight:700; } .ks { font-size:.75rem; color:var(--muted); }
+.warn { border-left:4px solid var(--red); padding:6px 12px; font-size:.9rem; }
+img { width:100%; height:auto; display:block; margin:8px 0; }
+.note { font-size:.85rem; color:var(--muted); margin:0 0 24px; }
+footer { font-size:.8rem; color:var(--muted); margin-top:32px; border-top:1px solid #D4D4D4; padding-top:12px; }
+</style></head><body><main>
+<h1>Shiller CAPE dashboard</h1>
+<p class="sub">Data through October 2026. Fetched 2026-11-11. Updated automatically when Shiller publishes a new file.</p>
+<div class="kpis"><div class="kpi"><div class="kl">CAPE</div><div class="kv">40.7</div><div class="ks">October 2026 (provisional)</div></div><div class="kpi"><div class="kl">Percentile since 1881</div><div class="kv">99</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Percentile since 1990</div><div class="kv">95</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Mean / median</div><div class="kv">17.8 / 16.6</div><div class="ks">full sample</div></div></div>
+<p class="warn">The latest month is provisional. The source says: "Oct price is Oct 2nd close". The value will probably be revised in the next update.</p>
+<img src="fig_cape.svg" alt="Line chart of the Shiller CAPE ratio since 1881 with the long-run mean and the latest value">
+<img src="fig_scatter.svg" alt="Scatter plot of CAPE against the real return over the following ten years with a fitted line">
+<p class="note">The fitted line (log CAPE, in-sample, n = 1,630, R-squared = 0.26) implies 0.4% a year at today&#x27;s CAPE. The observations use overlapping 10-year windows and are strongly autocorrelated, so the uncertainty is far larger than the line suggests. This is a descriptive relationship, not a forecast.</p>
+<img src="fig_excess.svg" alt="Line chart of the excess CAPE yield since 1881">
+<footer>Source: Robert J. Shiller, shillerdata.com. Prices are monthly averages of daily closes, except a provisional latest month.
+No representation is made as to accuracy. Not investment advice.</footer>
+</main></body></html>
