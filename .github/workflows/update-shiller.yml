@@ -1,43 +1,75 @@
-name: Update Shiller data
-
+name: Update Shiller data and dashboard
+ 
 on:
   schedule:
     - cron: "30 6 * * *"   # daglig kl. 06:30 UTC; skriptet hopper over hvis filen er uendret
-  workflow_dispatch: {}     # lar deg kjore manuelt fra Actions-fanen
-
+  workflow_dispatch: {}     # lar deg kjore manuelt fra Actions-fanen (publiserer da alltid siden)
+ 
 permissions:
-  contents: write
-
+  contents: write           # for a committe data/ og docs/
+  pages: write              # for a publisere til GitHub Pages
+  id-token: write
+ 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+ 
 jobs:
   update:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+ 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
+ 
       - name: Install fonts (Arial-compatible)
         run: sudo apt-get update -y && sudo apt-get install -y fonts-liberation
-
+ 
       - name: Install dependencies
         run: pip install pandas numpy requests xlrd matplotlib
-
+ 
       - name: Fetch and clean latest Shiller file
         run: python update_shiller.py --out data
-
+ 
       - name: Build dashboard
         run: python build_dashboard.py
-
+ 
       - name: Commit if data changed
+        id: commit
         run: |
           if [ -n "$(git status --porcelain data docs)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add data docs
             git commit -m "Update Shiller data and dashboard"
+            git pull --rebase origin "$GITHUB_REF_NAME"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "No changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
+ 
+      - name: Setup Pages
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/configure-pages@v5
+ 
+      - name: Upload site
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+ 
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/deploy-pages@v5
+
+ 
