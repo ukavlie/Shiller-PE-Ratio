@@ -17,12 +17,12 @@ img { width:100%; height:auto; display:block; margin:8px 0; }
 footer { font-size:.8rem; color:var(--muted); margin-top:32px; border-top:1px solid #D4D4D4; padding-top:12px; }
 </style></head><body><main>
 <h1>Shiller CAPE dashboard</h1>
-<p class="sub">Data through October 2026. Fetched 2026-11-11. Updated automatically when Shiller publishes a new file.</p>
-<div class="kpis"><div class="kpi"><div class="kl">CAPE</div><div class="kv">40.7</div><div class="ks">October 2026 (provisional)</div></div><div class="kpi"><div class="kl">Percentile since 1881</div><div class="kv">99</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Percentile since 1990</div><div class="kv">95</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Mean / median</div><div class="kv">17.8 / 16.6</div><div class="ks">full sample</div></div></div>
-<p class="warn">The latest month is provisional. The source says: "Oct price is Oct 2nd close". The value will probably be revised in the next update.</p>
+<p class="sub">Data through November 2026. Fetched 2026-11-16. Updated automatically when Shiller publishes a new file.</p>
+<div class="kpis"><div class="kpi"><div class="kl">CAPE</div><div class="kv">39.4</div><div class="ks">November 2026 (provisional)</div></div><div class="kpi"><div class="kl">Percentile since 1881</div><div class="kv">98</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Percentile since 1990</div><div class="kv">93</div><div class="ks">share of months with a lower CAPE</div></div><div class="kpi"><div class="kl">Mean / median</div><div class="kv">17.8 / 16.6</div><div class="ks">full sample</div></div></div>
+<p class="warn">The latest month is provisional. The source says: "Nov price is Nov 12th close". The value will probably be revised in the next update.</p>
 <img src="fig_cape.svg" alt="Line chart of the Shiller CAPE ratio since 1881 with the long-run mean and the latest value">
 <img src="fig_scatter.svg" alt="Scatter plot of CAPE against the real return over the following ten years with a fitted line">
-<p class="note">The fitted line (log CAPE, in-sample, n = 1,630, R-squared = 0.26) implies 0.4% a year at today&#x27;s CAPE. The observations use overlapping 10-year windows and are strongly autocorrelated, so the uncertainty is far larger than the line suggests. This is a descriptive relationship, not a forecast.</p>
+<p class="note">The fitted line (log CAPE, in-sample, n = 1,631, R-squared = 0.25) implies 0.6% a year at today&#x27;s CAPE. The observations use overlapping 10-year windows and are strongly autocorrelated, so the uncertainty is far larger than the line suggests. This is a descriptive relationship, not a forecast.</p>
 <img src="fig_excess.svg" alt="Line chart of the excess CAPE yield since 1881">
 <footer>Source: Robert J. Shiller, shillerdata.com. Prices are monthly averages of daily closes, except a provisional latest month.
 No representation is made as to accuracy. Not investment advice.</footer>
